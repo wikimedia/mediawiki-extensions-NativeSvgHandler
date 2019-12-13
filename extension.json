@@ -13,8 +13,8 @@
 		"MediaWiki": ">= 1.31.0"
 	},
 	"AutoloadClasses": {
-		"NativeSvgHandler": "MediaWiki\\Extensions\\NativeSvgHandler\\NativeSvgHandler.php",
-		"SvgImage": "MediaWiki\\Extensions\\NativeSvgHandler\\NativeSvgHandler.php"
+		"NativeSvgHandler": "includes/NativeSvgHandler.php",
+		"SvgImage": "includes/NativeSvgHandler.php"
 	},
 	"MessagesDirs": {
 		"NativeSvgHandler": [
@@ -22,10 +22,7 @@
 		]
 	},
 	"MediaHandlers": {
-		"image/svg+xml": "MediaWiki\\Extensions\\NativeSvgHandler\\NativeSvgHandler"
-	},
-	"AutoloadNamespaces": {
-		"MediaWiki\\Extensions\\NativeSvgHandler\\": "includes/"
+		"image/svg+xml": "NativeSvgHandler::NativeSvgHandler"
 	},
 	"manifest_version": 2
 }

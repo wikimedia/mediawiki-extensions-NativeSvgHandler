@@ -10,12 +10,7 @@
 		"commonjs": true,
 		"es6": true
 	},
-	"globals": {
-		"OO": "readonly"
-	},
 	"parserOptions": {
 		"ecmaVersion": 6
-	},
-	"rules": {
 	}
 }

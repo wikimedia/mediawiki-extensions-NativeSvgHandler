@@ -42,6 +42,7 @@ class NativeSvgHandler extends SvgHandler {
 
 		// @phan-suppress-next-line PhanTypeMismatchReturn
 		return new SvgImage(
+			// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 			$image, $image->getURL(), $params['width'], $params['height'], $image->getPath()
 		);
 	}

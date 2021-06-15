@@ -2,15 +2,40 @@
 
 class SvgImage extends MediaTransformOutput {
 
-	public function __construct( $file, $url, $width, $height, $path = false, $page = false ) {
+	public function __construct( $file, $url, $path = false, $parameters = [] ) {
+		# Previous parameters:
+		#   $file, $url, $width, $height, $path = false, $page = false
+
+		$defaults = [
+			'page' => false,
+			'lang' => false
+		];
+
+		if ( is_array( $parameters ) ) {
+			$actualParams = $parameters + $defaults;
+		} else {
+			# Using old format, should convert. Later a warning could be added here.
+			$numArgs = func_num_args();
+			$actualParams = [
+				'width' => $path,
+				'height' => $parameters,
+				'page' => ( $numArgs > 5 ) ? func_get_arg( 5 ) : false
+			] + $defaults;
+			$path = ( $numArgs > 4 ) ? func_get_arg( 4 ) : false;
+		}
+
 		$this->file = $file;
 		$this->url = $url;
-
-		$this->width = round( $width );
-		$this->height = round( $height );
-
 		$this->path = $path;
-		$this->page = $page;
+
+		# These should be integers when they get here.
+		# If not, there's a bug somewhere.  But let's at
+		# least produce valid HTML code regardless.
+		$this->width = round( $actualParams['width'] );
+		$this->height = round( $actualParams['height'] );
+
+		$this->page = $actualParams['page'];
+		$this->lang = $actualParams['lang'];
 	}
 
 	public function toHtml( $options = [] ) {
@@ -23,6 +48,17 @@ class SvgImage extends MediaTransformOutput {
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		$query = empty( $options['desc-query'] ) ? '' : $options['desc-query'];
+
+		$attribs = [
+			'alt' => $alt,
+			'src' => $this->url,
+			'decoding' => 'async',
+		];
+
+		if ( $options['loading'] ?? $wgNativeImageLazyLoading ) {
+			$attribs['loading'] = $options['loading'] ?? 'lazy';
+		}
+
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$linkAttribs = [ 'href' => $options['custom-url-link'] ];
 			if ( !empty( $options['title'] ) ) {
@@ -43,31 +79,36 @@ class SvgImage extends MediaTransformOutput {
 				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
 			];
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
+			$linkAttribs = $this->getDescLinkAttribs(
+				empty( $options['title'] ) ? null : $options['title'],
+				$query
+			);
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = [ 'href' => $this->file->getURL() ];
 		} else {
 			$linkAttribs = false;
+			if ( !empty( $options['title'] ) ) {
+				$attribs['title'] = $options['title'];
+			}
 		}
 
-		$attribs = [
-			'alt' => $alt,
-			'src' => $this->url,
-			'width' => $this->width,
-			'height' => $this->height,
-			'decoding' => 'async',
-		];
-
-		if ( $options['loading'] ?? $wgNativeImageLazyLoading ) {
-			$attribs['loading'] = $options['loading'] ?? 'lazy';
+		if ( empty( $options['no-dimensions'] ) ) {
+			$attribs['width'] = $this->width;
+			$attribs['height'] = $this->height;
 		}
-
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
 		}
+		if ( isset( $options['override-height'] ) ) {
+			$attribs['height'] = $options['override-height'];
+		}
+		if ( isset( $options['override-width'] ) ) {
+			$attribs['width'] = $options['override-width'];
+		}
+
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}
 }

@@ -14,6 +14,8 @@ class SvgImage extends MediaTransformOutput {
 	}
 
 	public function toHtml( $options = [] ) {
+		global $wgNativeImageLazyLoading;
+
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ . ' called in the old style' );
 		}
@@ -55,6 +57,11 @@ class SvgImage extends MediaTransformOutput {
 			'height' => $this->height,
 			'decoding' => 'async',
 		];
+
+		if ( $options['loading'] ?? $wgNativeImageLazyLoading ) {
+			$attribs['loading'] = $options['loading'] ?? 'lazy';
+		}
+
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}

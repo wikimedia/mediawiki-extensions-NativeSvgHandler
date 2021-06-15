@@ -53,6 +53,7 @@ class SvgImage extends MediaTransformOutput {
 			'src' => $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
+			'decoding' => 'async',
 		];
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";

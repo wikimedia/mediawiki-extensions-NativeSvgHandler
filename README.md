@@ -5,7 +5,7 @@ Extension:NativeSvgHandler allows SVG files to by served directly to clients for
 * [MediaWiki](https://www.mediawiki.org) 1.31 or later
 
 ## Installation
-You can get the extension via Git (specifying ShortDescription as the destination directory):
+You can get the extension via Git (specifying NativeSvgHandler as the destination directory):
 
     git clone https://github.com/wikimedia/mediawiki-extensions-NativeSvgHandler.git NativeSvgHandler
 

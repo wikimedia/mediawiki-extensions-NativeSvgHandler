@@ -31,8 +31,8 @@ class SvgImage extends MediaTransformOutput {
 		# These should be integers when they get here.
 		# If not, there's a bug somewhere.  But let's at
 		# least produce valid HTML code regardless.
-		$this->width = round( $actualParams['width'] );
-		$this->height = round( $actualParams['height'] );
+		$this->width = (int)round( $actualParams['width'] );
+		$this->height = (int)round( $actualParams['height'] );
 
 		$this->page = $actualParams['page'];
 		$this->lang = $actualParams['lang'];

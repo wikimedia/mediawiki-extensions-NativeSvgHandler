@@ -2,7 +2,7 @@
 Extension:NativeSvgHandler allows SVG files to by served directly to clients for client-side rendering.
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.31 or later
+* [MediaWiki](https://www.mediawiki.org) 1.35 or later
 
 ## Installation
 You can get the extension via Git (specifying NativeSvgHandler as the destination directory):

@@ -1,6 +1,6 @@
 {
 	"name": "NativeSvgHandler",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"author": [
 		"Povilas Kanapickas",
 		"Ilaï Deutel"
@@ -14,8 +14,7 @@
 		"MediaWiki": ">= 1.35.0"
 	},
 	"AutoloadClasses": {
-		"NativeSvgHandler": "includes/NativeSvgHandler.php",
-		"SvgImage": "includes/SvgImage.php"
+		"NativeSvgHandler": "includes/NativeSvgHandler.php"
 	},
 	"MessagesDirs": {
 		"NativeSvgHandler": [

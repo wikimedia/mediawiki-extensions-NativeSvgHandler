@@ -28,22 +28,12 @@ class NativeSvgHandler extends SvgHandler {
 		return true;
 	}
 
-	public function normaliseParams( $image, &$params ) {
-		if ( !ImageHandler::normaliseParams( $image, $params ) ) {
-			return false;
-		}
-		return true;
-	}
-
 	public function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		if ( !$this->normaliseParams( $image, $params ) ) {
 			return new TransformParameterError( $params );
 		}
 
-		// @phan-suppress-next-line PhanTypeMismatchReturnProbablyReal
-		return new SvgImage(
-			$image, $image->getURL(), $params['width'], $params['height'], $image->getPath()
-		);
+		return new ThumbnailImage( $image, $image->getURL(), $image->getPath(), $params );
 	}
 
 	public function getThumbType( $ext, $mime, $params = null ) {

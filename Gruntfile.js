@@ -10,8 +10,7 @@ module.exports = function ( grunt ) {
 			options: {
 				extensions: [ '.json' ],
 				cache: true,
-				fix: true,
-				force: true
+				fix: grunt.option( 'fix' )
 			},
 			all: '.'
 		},

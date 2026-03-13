@@ -29,6 +29,7 @@ class NativeSvgHandler extends SvgHandler {
 	}
 
 	public function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
+		// @phan-suppress-previous-line PhanParamSignatureMismatch False positive
 		if ( !$this->normaliseParams( $image, $params ) ) {
 			return new TransformParameterError( $params );
 		}
